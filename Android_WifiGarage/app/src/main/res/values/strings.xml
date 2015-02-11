@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WifiGarage</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    
+    <string name="sparkCoreID"></string>
+    <string name="sparkControlGarageFunction">control</string>
+    <string name="sparkGarageClosedFunctionSensor">doorStatus</string>
+    <string name="sparkCoreAuthToken"></string>
+
+
+</resources>
