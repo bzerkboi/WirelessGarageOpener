@@ -11,8 +11,7 @@ import retrofit.client.OkClient;
  */
 public class RestClient {
     private static API REST_CLIENT;
-    private static String ROOT =
-            "https://api.spark.io";
+    private static String ROOT = "https://api.spark.io";
     static {
         setupRestClient();
     }

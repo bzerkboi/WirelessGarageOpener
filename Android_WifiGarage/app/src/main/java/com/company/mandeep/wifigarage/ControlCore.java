@@ -44,8 +44,6 @@ public class ControlCore {
     
     public static enum ControlGarageCommands
     {
-        open,
-        close
-        
+        move
     }
 }
