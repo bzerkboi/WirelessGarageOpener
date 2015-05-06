@@ -13,7 +13,7 @@ void setup() {
     Spark.function("control",controlGarageDoor);
 
     //Expose the door status to the api <-- Lets try to expose this variable throught a publish
-    //Spark.variable("doorStatus",&garageClose, INT);
+    Spark.variable("doorStatus",&garageClose, INT);
 
     //This pin will be used to send the signal to the relay to open/close
     //the garage door
