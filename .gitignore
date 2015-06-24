@@ -1,3 +1,5 @@
+Credentials_SparkCore.txt
+
 # Built application files
 *.apk
 *.ap_
@@ -24,5 +26,3 @@ proguard/
 
 # Log Files
 *.log
-
-Credentials_SparkCore.txt

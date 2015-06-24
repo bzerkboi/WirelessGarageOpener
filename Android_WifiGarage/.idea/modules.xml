@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android_WifiGarage.iml" filepath="$PROJECT_DIR$/Android_WifiGarage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WifiGarageBackend/WifiGarageBackend.iml" filepath="$PROJECT_DIR$/WifiGarageBackend/WifiGarageBackend.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

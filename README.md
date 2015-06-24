@@ -1,1 +1,2 @@
 # WirelessGarageOpener
+Wireless Garage Project

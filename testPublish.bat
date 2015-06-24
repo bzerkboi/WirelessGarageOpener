@@ -1,1 +1,0 @@
-curl -H "Authorization: Bearer 3347ecf5bbf0c8bb8e6b7b6f9e15c012668a054d" https://api.spark.io/v1/events/GarageMoved
