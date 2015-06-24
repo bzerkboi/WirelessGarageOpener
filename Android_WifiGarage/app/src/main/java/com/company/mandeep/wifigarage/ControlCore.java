@@ -41,11 +41,9 @@ public class ControlCore {
     public void setReturn_value(int return_value) {
         this.return_value = return_value;
     }
-    
+
     public static enum ControlGarageCommands
     {
-        open,
-        close
-        
+        move
     }
 }

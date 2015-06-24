@@ -1,6 +1,7 @@
 package com.company.mandeep.wifigarage;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.google.gson.annotations.SerializedName;
 
@@ -24,32 +27,36 @@ public class GarageMainActivity extends Activity {
 
     protected final static int GARAGE_OPEN = 1;
     protected final static int GARAGE_CLOSED = 0;
-    private final static String GARAGE_IS_CLOSED="1";
-    private final static String GARAGE_IS_NOT_CLOSED="0";
+    private final static int GARAGE_STATE_UNKNOWN=-1;
+
+    private final static String GARAGE_IS_CLOSED="0";
+    private final static String GARAGE_IS_NOT_CLOSED="1";
 
     private Handler myHandler;
     Thread doorStatusThread;
-        
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garage_main);
+
+        //Setup Retrofit
         AppConfig.initialize(this);
 
-        //Need to set up a thread to monitor the garage door status messages
-        myHandler = new GarageDoorStatusIndicatorHandler(new WeakReference<>(this));
-
+        //Init a handler to handle mesaeges being sent in the app, passing in a reference of this (parent)
+        myHandler= new GarageDoorStatusIndicatorHandler(new WeakReference<>(this));
     }
-
-    public RadioButton getOpen() { return (RadioButton)findViewById(R.id.openGarageIndicator); }
-    public RadioButton getClose() { return (RadioButton)findViewById(R.id.closeGarageIndicator); }
 
     @Override
     protected void onResume()
     {
         super.onResume();
+
+        //Crete a new thread to monitor the door status passing in the handler created during the init
         doorStatusThread=new Thread(new MonitorDoorStatus(myHandler));
+
+        //Start the thread
         doorStatusThread.start();
     }
 
@@ -57,6 +64,8 @@ public class GarageMainActivity extends Activity {
     protected void onPause()
     {
         super.onPause();
+
+        //Stop the thread
         doorStatusThread.interrupt();
     }
 
@@ -82,59 +91,51 @@ public class GarageMainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void OpenGarageBtnClick(View v)
+    public TextView getGarageStateForTextView()
     {
-        new OpenGarage().execute();
+        //Used to get the textview so something other than the parent can modify it
+        return (TextView) findViewById(R.id.garageStatus);
+    }
+
+    //Button handler for when a user clicks the button to move the garage
+    public void MoveGarageClick(View v)
+    {
+        //Execute an async class which contains the code to move the garage
+        new MoveGarage().execute();
     }
 
     //Create an async class to send an open garage command and handle the returned result
-    private class OpenGarage extends AsyncTask<Void,Void,String>
+    private class MoveGarage extends AsyncTask<Void,Void,String>
     {
         @Override
         protected String doInBackground(Void... params)
         {
-            RestClient.get().controlGarage(AppConfig.getSparkCoreID(), AppConfig.getSparkControlGarageFunction(), new Arguments(ControlCore.ControlGarageCommands.open.toString()), new Callback<ControlCore>() {
+            //Issue a request to the Spark to move the garage
+            RestClient.get().controlGarage(AppConfig.getSparkCoreID(), AppConfig.getSparkControlGarageFunction(), new Arguments(ControlCore.ControlGarageCommands.move.toString()), new Callback<ControlCore>() {
                 @Override
-                public void success(ControlCore controlCore, Response response) 
+                public void success(ControlCore controlCore, Response response)
                 {
                     //Do something in here to indicate we opened the garage successfully
+                    switch (controlCore.getReturn_value())
+                    {
+                        case 1:
+                            Toast.makeText(getApplicationContext(),"Garage has moved",Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(getApplicationContext(),"Garage did not move",Toast.LENGTH_SHORT).show();
+                            break;
+                    }
                 }
 
                 @Override
-                public void failure(RetrofitError error) 
+                public void failure(RetrofitError error)
                 {
+                    //There was an error trying to move the garage door
                     RestError errorBody = (RestError) error.getBodyAs(RestError.class);
+                    Toast.makeText(getApplicationContext(),"Error moving garage door",Toast.LENGTH_SHORT).show();
                 }
             });
 
-            return "";
-        }
-
-    }
-
-    public void CloseGarageBtnClick(View v)
-    {
-        new CloseGarage().execute();
-    }
-
-    private class CloseGarage extends AsyncTask<Void,Void,String>
-    {
-
-        @Override
-        protected String doInBackground(Void... params) {
-            RestClient.get().controlGarage(AppConfig.getSparkCoreID(), AppConfig.getSparkControlGarageFunction(), new Arguments(ControlCore.ControlGarageCommands.close.toString()), new Callback<ControlCore>() {
-                @Override
-                public void success(ControlCore controlCore, Response response) 
-                {
-                    //Do something here indicating we closed the garage
-                }
-
-                @Override
-                public void failure(RetrofitError error) 
-                {
-                    RestError errorBody = (RestError) error.getBodyAs(RestError.class);
-                }
-            });
             return "";
         }
     }
@@ -142,24 +143,26 @@ public class GarageMainActivity extends Activity {
     //This class will loop to check the status of the switch, maybe put into its own intent
     private class MonitorDoorStatus implements Runnable
     {
+        //The handler for messages
         private final Handler doorStatushandler;
 
+        //Pass in the handler
         MonitorDoorStatus(Handler handler)
         {
             doorStatushandler=handler;
         }
 
-        //Log.i("HandlerThread", "Worked");
-
+        //run the thread
         public void run()
         {
             while(!Thread.currentThread().isInterrupted()) {
                 //Log.i("HandlerThread", "Worked");
-                
+
                 //Look at the sensor to see if the door is open or not
                 RestClient.get().getCommand(AppConfig.getSparkCoreID(),AppConfig.getSparkGarageClosedFunctionSensor(),new Callback<GetVariable>()
                 {
                     @Override
+                    //These methods are called when we can successfuly get the status of the door
                     public void success(GetVariable getVariable, Response response) {
                         if(getVariable.getResult()==GARAGE_IS_NOT_CLOSED)
                         {
@@ -171,37 +174,31 @@ public class GarageMainActivity extends Activity {
                         }
                         else
                         {
-                            Log.i("HandlerThread", "Worked");
+                            //get this when we don't know what the status of the door is
+                            doorStatushandler.sendMessage(doorStatushandler.obtainMessage(GARAGE_STATE_UNKNOWN));
                         }
                     }
 
                     @Override
-                    public void failure(RetrofitError error) 
+                    public void failure(RetrofitError error)
                     {
                         RestError errorBody= (RestError)error.getBodyAs(RestError.class);
+                        doorStatushandler.sendMessage(doorStatushandler.obtainMessage(GARAGE_STATE_UNKNOWN));
                     }
                 });
 
+                //sleep for a set amount of time
                 sleep();
             }
         }
 
         private void sleep() {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    class RestError {
-        @SerializedName("code")
-        public int code;
-        @SerializedName("error")
-        public String error;
-        @SerializedName("error_description")
-        public String error_description;
     }
 
     //This is a handler class which handles the messages being sent in the app
@@ -225,19 +222,29 @@ public class GarageMainActivity extends Activity {
                     case GARAGE_OPEN:
                     {
                         Log.i("LOG","garage is open now");
-                        parent.getOpen().setChecked(true);
-                        parent.getClose().setChecked(false);
+                        parent.getGarageStateForTextView().setText("Garage is open");
                         break;
                     }
                     case GARAGE_CLOSED:
                     {
                         Log.i("LOG","garage is closed now");
-                        parent.getOpen().setChecked(false);
-                        parent.getClose().setChecked(true);
+                        parent.getGarageStateForTextView().setText("Garage is closed");
                         break;
                     }
+                    case GARAGE_STATE_UNKNOWN:
+                        parent.getGarageStateForTextView().setText("Garage state is unknown");
+                        break;
                 }
             }
         }
+    }
+
+    class RestError {
+        @SerializedName("code")
+        public int code;
+        @SerializedName("error")
+        public String error;
+        @SerializedName("error_description")
+        public String error_description;
     }
 }

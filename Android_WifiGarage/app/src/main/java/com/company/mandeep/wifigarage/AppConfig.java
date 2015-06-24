@@ -10,7 +10,7 @@ public class AppConfig {
     private static Context ctx;
 
     public static void initialize(Context context)
-    {        
+    {
         ctx=context.getApplicationContext();
     }
 
@@ -18,21 +18,21 @@ public class AppConfig {
     {
         return ctx.getString(R.string.sparkCoreID);
     }
-    
+
     public static String getSparkCoreAuthToken()
     {
         return ctx.getString(R.string.sparkCoreAuthToken);
     }
-    
+
     public static String getSparkControlGarageFunction()
     {
         return ctx.getString(R.string.sparkControlGarageFunction);
-        
+
     }
-    
+
     public static String getSparkGarageClosedFunctionSensor()
     {
         return ctx.getString(R.string.sparkGarageClosedFunctionSensor);
-        
+
     }
 }
