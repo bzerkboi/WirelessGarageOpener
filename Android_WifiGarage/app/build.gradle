@@ -23,6 +23,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.2.0'
+    compile 'com.android.support:design:22.2.0'
     //testCompile 'com.squareup.okhttp:mockwebserver:2.2.0'
     //compile 'com.parse.bolts:bolts-android:1.+'
     //compile fileTree(include: 'Parse-1.9.2.jar', dir: 'libs')

@@ -3,7 +3,8 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".GarageMainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".GarageMainActivity"
+    android:id="@+id/garageMain">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,41 +16,76 @@
         android:layout_alignParentStart="true"
         android:fontFamily="roboto"
         android:textSize="45sp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"/><![CDATA[
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Main Garage"
-        android:gravity="center"
-        android:id="@+id/GarageName"
-        android:fontFamily="roboto"
-        android:textSize="20sp"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/HomeName"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"/>/>
+    />
+
+    ]]>
 
     <Button
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@drawable/button_ripple"
         android:id="@+id/imageButton"
         android:onClick="MoveGarageClick"
-        android:layout_below="@+id/GarageName"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/txtUserEmailAddress"
+        android:layout_toStartOf="@+id/btnAddDevice"
+        android:layout_marginTop="25dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Garage Status..."
         android:id="@+id/garageStatus"
-        android:layout_marginTop="36dp"
         android:gravity="center"
-        android:layout_below="@+id/imageButton"
-        android:layout_alignParentStart="true"
         android:fontFamily="roboto"
         android:textSize="16sp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Device"
+        android:id="@+id/btnAddDevice"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/HomeName"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtSparkCoreID"
+        android:layout_alignTop="@+id/btnAddDevice"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/btnAddDevice"
+        android:text="SparkCoreID" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtSparkAuthToken"
+        android:layout_below="@+id/txtSparkCoreID"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/txtSparkCoreID"
+        android:text="SparkAuthToken" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtUserEmailAddress"
+        android:layout_below="@+id/txtSparkAuthToken"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
+        android:layout_toStartOf="@+id/btnAddDevice"
+        android:text="Email Address" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add User For Device"
+        android:id="@+id/btnAddUserForDevice"
+        android:layout_alignBottom="@+id/txtUserEmailAddress"
+        android:layout_toEndOf="@+id/imageButton" />
 
 </RelativeLayout>

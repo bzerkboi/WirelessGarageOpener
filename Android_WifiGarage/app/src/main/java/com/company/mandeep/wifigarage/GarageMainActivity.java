@@ -10,11 +10,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.SparkDevice;
 import com.google.gson.annotations.SerializedName;
+import com.parse.ParseACL;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 import java.lang.ref.WeakReference;
 
@@ -40,6 +45,32 @@ public class GarageMainActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garage_main);
+        //setContentView(R.layout.activity_garage_opener);
+
+        findViewById(R.id.btnAddDevice).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SparkDevice sparkDevice = new SparkDevice();
+                EditText sparkCoreID=(EditText)findViewById(R.id.txtSparkCoreID);
+                EditText sparkAuthToken= (EditText)findViewById(R.id.txtSparkAuthToken);
+
+                sparkDevice.setSparkCoreID("54ff6e066672524818221267");
+                sparkDevice.setSparkAuthToken("de359d9f45098701c5d6141a4cca39e16e1136fd");
+                sparkDevice.setDeviceName("HomeGarageOpener");
+                sparkDevice.setDeviceType(SparkDevice.TypeOfDevice.GarageDoorOpener);
+
+                ParseACL acl = new ParseACL();
+                acl.setPublicReadAccess(true);
+                sparkDevice.setACL(acl);
+
+                sparkDevice.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        finish();
+                    }
+                });
+            }
+        });
 
         //Setup Retrofit
         AppConfig.initialize(this);
