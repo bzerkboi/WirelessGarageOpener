@@ -5,14 +5,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    
+
     <string name="sparkCoreID">54ff6e066672524818221267</string>
     <string name="sparkControlGarageFunction">control</string>
     <string name="sparkGarageClosedFunctionSensor">doorStatus</string>
     <string name="sparkCoreAuthToken">de359d9f45098701c5d6141a4cca39e16e1136fd</string>
 
-    <string name="parse_app_id">Houg0SHJuJ7cbq9e7GRsYJgZLR6DtvPuqwT4rV4C</string>
-    <string name="parse_client_key">t6VE7WjYuOvK1VmqlzZF28QUrwAhwBd9vGj0NnKz</string>
+    <string name="parse_app_id">T2vlUh3HtdsbDWgdkyhF5jU9ViHkqwjj0d89UeTH</string>
+    <string name="parse_client_key">C0WThz8rZHD9zY3PbZUO2weDTMSNlD1nNe606oFj</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
