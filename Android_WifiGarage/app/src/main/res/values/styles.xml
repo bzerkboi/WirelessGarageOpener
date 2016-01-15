@@ -9,4 +9,15 @@
         <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">#FF4081</item>
     </style>
+
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:colorBackground">@color/background_material_dark_2</item>
+        <item name="android:textColorPrimary">@color/primary_text_material_light</item>
+        <item name="colorPrimary">@color/background_material_dark_2</item>
+
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#18FFFF</item>
+    </style>
 </resources>
