@@ -5,12 +5,6 @@
     tools:context=".ItemsFragment"
     android:background="#bdbdbd">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/TabText2" />
-
     <!-- A RecyclerView with some commonly used attributes -->
     <!-- This acts as a list view, but smarter. It recycles views without eating up
     too much resources-->

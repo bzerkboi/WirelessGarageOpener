@@ -4,9 +4,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.Device;
+import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.SparkDevice;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -18,10 +28,16 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ItemsFragment extends Fragment {
+
+    public class ItemDataSet{
+        public String itemName;
+        public boolean itemStatus;
+    }
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "ItemsFragment";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -33,7 +49,8 @@ public class ItemsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    protected String[] myDataSet; //This is the data set which will update the items in the rescyler view
+    //protected String[] myDataSet; //This is the data set which will update the items in the rescyler view
+    protected ArrayList<ItemDataSet> myDataSet;
 
     public ItemsFragment() {
         // Required empty public constructor
@@ -61,10 +78,14 @@ public class ItemsFragment extends Fragment {
         mPage = getArguments().getInt(ARG_PAGE); //When we create this fragment, we want to return the page number (tab number)
 
         //Update the data set here
-        myDataSet = new String[10];
+
+        //Get the number of items for the user
+
+
+        /*myDataSet = new String[10];
         for (int i = 0; i < 10; i++) {
             myDataSet[i] = "This is element #" + i;
-        }
+        }*/
 
     }
 
@@ -87,8 +108,27 @@ public class ItemsFragment extends Fragment {
 
         // specify an adapter
         //This is a customer adapter to bind the items to the recycler view
+        myDataSet=new ArrayList<ItemDataSet>();
         mAdapter = new CustomAdapter(myDataSet);
         mRecyclerView.setAdapter(mAdapter);
+
+        //Update the adapter to indicate we have added devices to the view
+        ParseQuery<Device> query = ParseQuery.getQuery(Device.class);
+        query.whereEqualTo("name","Wifi Garage");
+        query.findInBackground(new FindCallback<Device>() {
+            @Override
+            public void done(List<Device> list, ParseException e) {
+                for(Device d : list) {
+                    ItemDataSet item = new ItemDataSet();
+                    item.itemName = d.getDisplayName();
+                    myDataSet.add(item);
+
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                Log.d(TAG, "done: " + list.size());
+            }
+        });
 
         return rootView;
     }

@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by Mandeep on 1/14/2016.
  */
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private static final String TAG = "CustomAdapter";
-    private String[] mDataSet;
+    private List<ItemsFragment.ItemDataSet> mDataSet;
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -21,7 +23,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder { //This is the view which is returned
 
         //The items which will show up as content for each item
-        private final TextView textView;
+        private final TextView deviceName;
+
+        //private final Switch switchView;
 
         public ViewHolder(View v) {
             super(v);
@@ -32,15 +36,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     Log.d(TAG, "Element " + getPosition() + " clicked.");
                 }
             });
-            textView = (TextView) v.findViewById(R.id.textView);
+            deviceName = (TextView) v.findViewById(R.id.deviceName);
         }
 
         public TextView getTextView() {
-            return textView;
+            return deviceName;
         }
+        //public Switch getSwitch() { return switchView;}
     }
 
-    public CustomAdapter(String[] dataSet) {
+    public CustomAdapter(List<ItemsFragment.ItemDataSet> dataSet) {
         mDataSet = dataSet;
     }
 
@@ -49,7 +54,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.text_row_item, viewGroup, false);
+                .inflate(R.layout.items_template, viewGroup, false);
 
         return new ViewHolder(v);
     }
@@ -61,12 +66,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        viewHolder.getTextView().setText(mDataSet[position]);
+        viewHolder.getTextView().setText(mDataSet.get(position).itemName);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+       if(mDataSet==null)
+           return 0;
+        else
+           return mDataSet.size();
     }
 }

@@ -22,6 +22,8 @@ public class SparkDevice extends ParseObject{
     public String getDeviceName(){return getString("deviceName");}
     public void setDeviceName(String value){put("deviceName",value);}
 
+    public SparkDevice (){}
+
     public enum TypeOfDevice
     {
         GarageDoorOpener

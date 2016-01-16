@@ -1,6 +1,6 @@
 package com.company.mandeep.wifigarage;
 
-import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.DeviceStatusChangePost;
+import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.Device;
 import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.SparkDevice;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -19,6 +19,8 @@ public class Application extends  android.app.Application{
 
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
         ParseObject.registerSubclass(SparkDevice.class);
+        ParseObject.registerSubclass(Device.class);
+
         Parse.initialize(this, this.getString(R.string.parse_app_id),
                 this.getString(R.string.parse_client_key));
 
