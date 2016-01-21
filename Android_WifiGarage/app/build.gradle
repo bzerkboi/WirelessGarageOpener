@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -29,8 +30,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.2.0'
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
-    //testCompile 'com.squareup.okhttp:mockwebserver:2.2.0'
     //compile 'com.parse.bolts:bolts-android:1.+'
-    //compile fileTree(include: 'Parse-1.9.2.jar', dir: 'libs')
+    //compile 'com.parse:parse-android:1.+'
     compile project(':ParseLoginUI')
 }

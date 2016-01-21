@@ -6,6 +6,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.parse.ParseAnalytics;
+import com.parse.ParsePush;
+
 /**
  * Created by Mandeep on 1/11/2016.
  */
@@ -16,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_garage_main_tabs);
+        ParsePush.subscribeInBackground("Giants");
+
+
+
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);

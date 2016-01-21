@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "HomeIOT": {
+      "applicationId": "T2vlUh3HtdsbDWgdkyhF5jU9ViHkqwjj0d89UeTH"
+    },
+    "_default": {
+      "link": "HomeIOT"
+    }
+  }
+}
