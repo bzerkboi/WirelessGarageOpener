@@ -33,10 +33,10 @@ Parse.Cloud.afterSave("Device",function(request) {
 
 	 
 	// Send an SMS message
-	client.sendSms({
-	    to:'+18594442024',
+	/*client.sendSms({
+	    to:'+12042962786',
 	    from: '+12048088077',
-	    body: 'Fuck yeah, i am getting twilio texts as well as parse push notifications alll from the cloud baby!!!'
+	    body: 'This is your first bollywood notification from the one and only Mr Mandeep Bollywood Saini.'
 	  }, function(err, responseData) {
 	    if (err) {
 	      console.log(err);
@@ -49,9 +49,9 @@ Parse.Cloud.afterSave("Device",function(request) {
 
 		// Send an SMS message
 	client.sendSms({
-	    to:'+18594442024',
+	    to:'+12042962786',
 	    from: '+12048088077',
-	    body: 'Told you i would get twilio working with parse cloud code ;) .'
+	    body: 'Told you i would get twilio working with parse cloud code.'
 	  }, function(err, responseData) {
 	    if (err) {
 	      console.log(err);
@@ -74,5 +74,5 @@ Parse.Cloud.afterSave("Device",function(request) {
 	      console.log(responseData.body);
 	    }
 	  }
-	);
+	);*/
 });
