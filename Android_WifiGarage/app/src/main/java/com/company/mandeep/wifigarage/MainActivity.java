@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_garage_main_tabs);
         ParsePush.subscribeInBackground("Giants");
 
-
-
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items

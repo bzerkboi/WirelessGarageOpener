@@ -1,5 +1,9 @@
 package com.company.mandeep.wifigarage;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.Device;
-import com.company.mandeep.wifigarage.com.company.mandeep.ParseObjects.SparkDevice;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParsePushBroadcastReceiver;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -52,6 +56,8 @@ public class ItemsFragment extends Fragment {
     //protected String[] myDataSet; //This is the data set which will update the items in the rescyler view
     protected ArrayList<ItemDataSet> myDataSet;
 
+    public BroadcastReceiver broadcastReceiver ;
+
     public ItemsFragment() {
         // Required empty public constructor
     }
@@ -86,7 +92,6 @@ public class ItemsFragment extends Fragment {
         for (int i = 0; i < 10; i++) {
             myDataSet[i] = "This is element #" + i;
         }*/
-
     }
 
     @Override
@@ -132,4 +137,26 @@ public class ItemsFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //getActivity().unregisterReceiver(broadcastReceiver);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.i(TAG, "onReceive: ");
+            }
+        };
+        getActivity().registerReceiver(broadcastReceiver,new IntentFilter("TableChanged"));
+    }
+
+
+
 }

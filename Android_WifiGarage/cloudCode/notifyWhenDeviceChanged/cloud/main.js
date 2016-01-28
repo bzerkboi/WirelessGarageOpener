@@ -60,7 +60,7 @@ Parse.Cloud.afterSave("Device",function(request) {
 	      console.log(responseData.body);
 	    }
 	  }
-	);
+	);*/
 		// Send an SMS message
 	client.sendSms({
 	    to:'+12049953920',
@@ -74,5 +74,5 @@ Parse.Cloud.afterSave("Device",function(request) {
 	      console.log(responseData.body);
 	    }
 	  }
-	);*/
+	);
 });
